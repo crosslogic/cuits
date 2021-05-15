@@ -48,8 +48,8 @@ func New(cuit int64) (c CUIT, err error) {
 
 // EsJuridica devuelve true si el cuit arranca con mas de 30.
 func (c CUIT) EsJuridica() (es bool, err error) {
-	if c.Valid() == false {
-		return es, errors.Errorf("Cuit invalido %v", c)
+	if !c.Valid() {
+		return es, errors.Errorf("cuit invalido '%v'", c)
 	}
 	enString := c.StringSinGuiones()
 	primerosDos := enString[:2]
@@ -68,11 +68,11 @@ func (c CUIT) ExtraerDNI() (dni int, err error) {
 	if c.Valid() == false {
 		return dni, errors.Errorf("el CUIT '%v' no es valido", c)
 	}
-	es, err := c.EsJuridica()
+	esJuridica, err := c.EsJuridica()
 	if err != nil {
 		return dni, err
 	}
-	if es == false {
+	if esJuridica {
 		return dni, errors.Errorf("el CUIT %v pertenece a una persona juridica", c)
 	}
 	str := c.String()[2:10]

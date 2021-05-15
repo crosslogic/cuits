@@ -34,3 +34,24 @@ func TestToStringConGuiones(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, "20-32889647-9", cuit.String())
 }
+
+func TestEsJuridica(t *testing.T) {
+
+	{
+		cuit, err := New(20328896479)
+		assert.Nil(t, err)
+
+		es, err := cuit.EsJuridica()
+		assert.Nil(t, err)
+		assert.False(t, es)
+	}
+
+	{
+		cuit, err := New(33693450239)
+		assert.Nil(t, err)
+
+		es, err := cuit.EsJuridica()
+		assert.Nil(t, err)
+		assert.True(t, es)
+	}
+}

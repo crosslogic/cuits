@@ -65,7 +65,7 @@ func (c CUIT) EsJuridica() (es bool, err error) {
 
 // ExtraerDNI devuelve el DNI en el caso que se trate de una persona física
 func (c CUIT) ExtraerDNI() (dni int, err error) {
-	if c.Valid() == false {
+	if !c.Valid() {
 		return dni, errors.Errorf("el CUIT '%v' no es valido", c)
 	}
 	esJuridica, err := c.EsJuridica()
@@ -75,7 +75,8 @@ func (c CUIT) ExtraerDNI() (dni int, err error) {
 	if esJuridica {
 		return dni, errors.Errorf("el CUIT %v pertenece a una persona juridica", c)
 	}
-	str := c.String()[2:10]
+
+	str := fmt.Sprint(int(c))[2:10]
 	dni, err = strconv.Atoi(str)
 	return
 }

@@ -55,3 +55,14 @@ func TestEsJuridica(t *testing.T) {
 		assert.True(t, es)
 	}
 }
+
+func TestExtraerDNI(t *testing.T) {
+	{
+		cuit, err := New(20328896479)
+		assert.Nil(t, err)
+
+		dni, err := cuit.ExtraerDNI()
+		assert.Nil(t, err)
+		assert.Equal(t, 32889647, dni)
+	}
+}
